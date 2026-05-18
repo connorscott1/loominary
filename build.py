@@ -72,6 +72,19 @@ PLATFORMS = {
             '*://*.grok.com/*',
         ]
     },
+    'meta': {
+        'name': 'Meta AI',
+        'matches': [
+            'https://www.meta.ai/*',
+            'https://meta.ai/*'
+        ],
+        'connect': [
+            'www.meta.ai',
+            'meta.ai',
+            'fbcdn.net',
+            'fbsbx.com'
+        ]
+    },
     'copilot': {
         'name': 'Copilot',
         'matches': [
@@ -260,7 +273,7 @@ def extract_styles_from_ui(ui_code):
     return ""
 
 # Userscript 发布的平台
-USERSCRIPT_PLATFORMS = ['claude', 'chatgpt', 'grok', 'gemini']
+USERSCRIPT_PLATFORMS = ['claude', 'chatgpt', 'grok', 'meta', 'gemini']
 
 def generate_userscript_header(platforms):
     """生成 Userscript 的 ==UserScript== 元数据块"""
@@ -284,7 +297,7 @@ def generate_userscript_header(platforms):
 // @name:de      Loominary (Ein-Klick AI-Chat-Backup)
 // @namespace    https://github.com/Laumss/loominary
 // @version      {VERSION}
-// @description One-click export for Claude, ChatGPT, Grok, Gemini , Google AI Studio. Backups all chat branches, artifacts, and attachments. Exports to JSON/Markdown/PDF/Editable Screenshots. The ultimate companion for Lyra Exporter to build your local AI knowledge base.
+// @description One-click export for Claude, ChatGPT, Grok, Meta AI, Gemini , Google AI Studio. Backups all chat branches, artifacts, and attachments. Exports to JSON/Markdown/PDF/Editable Screenshots. The ultimate companion for Lyra Exporter to build your local AI knowledge base.
 // @description:zh-CN  一键导出 Claude/ChatGPT/Gemini/Grok/Google AI Studio 对话记录（支持分支、PDF、长截图）。保留完整对话分支、附加图片、LaTeX 公式、Artifacts、附件与思考过程。Lyra Exporter 的最佳搭档，打造您的本地 AI 知识库。
 // @description:zh-TW 一鍵匯出 Claude、ChatGPT、Grok、Gemini、Google AI Studio 的對話。備份所有聊天分支、Artifacts 和附件。匯出為 JSON/Markdown/PDF/可編輯截圖。Lyra Exporter 的終極配套工具，用於建構本地 AI 知識庫。
 // @description:ja Claude、ChatGPT、Grok、Gemini、Google AI Studio のワンクリックエクスポート。すべてのチャットブランチ、アーティファクト、添付ファイルをバックアップ。JSON/Markdown/PDF/編集可能なスクリーンショットにエクスポート。ローカル AI ナレッジベース構築のための Lyra Exporter の究極のコンパニオン。
@@ -300,6 +313,8 @@ def generate_userscript_header(platforms):
 // @match        https://chatgpt.com/*
 // @match        https://chat.openai.com/*
 // @match        https://grok.com/*
+// @match        https://www.meta.ai/*
+// @match        https://meta.ai/*
 // @match        https://gemini.google.com/*
 // @match        https://aistudio.google.com/*
 // @grant        GM_addStyle

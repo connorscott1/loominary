@@ -13,6 +13,7 @@ export const PARSER_CONFIG = {
     aistudio: 'Google AI Studio',
     claude: 'Claude',
     grok: 'Grok',
+    meta: 'Meta AI',
     claude_code: 'Claude Code',
     jsonl_chat: 'SillyTavern',
     chatgpt: 'ChatGPT'
@@ -24,6 +25,7 @@ export const PARSER_CONFIG = {
     aistudio: 'platform-gemini',
     notebooklm: 'platform-notebooklm',
     grok: 'platform-grok',
+    meta: 'platform-meta',
     claude_code: 'platform-claude',
     jsonl_chat: 'platform-jsonl',
     chatgpt: 'platform-chatgpt'
@@ -35,6 +37,7 @@ export const PARSER_CONFIG = {
     aistudio: 'gemini_notebooklm',
     notebooklm: 'gemini_notebooklm',
     grok: 'grok',
+    meta: 'meta',
     chatgpt: 'chatgpt'
   },
 
@@ -223,6 +226,8 @@ export const FileUtils = {
         return isChinese ? '完整导出' : 'Full Export';
       case 'grok':
         return 'Grok';
+      case 'meta':
+        return 'Meta AI';
       case 'gemini_notebooklm':
         if (platform === 'notebooklm') return 'NotebookLM';
         if (platform === 'aistudio') return 'Google AI Studio';

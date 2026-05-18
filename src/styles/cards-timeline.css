@@ -917,6 +917,12 @@
   border-color: #e0e0e0;
 }
 
+.timeline-avatar.assistant.platform-meta  {
+  background: #0668e1;
+  color: #ffffff;
+  border-color: #0668e1;
+}
+
 .timeline-avatar.assistant.platform-copilot  {
   background: #ffffff;
   color: #000000;

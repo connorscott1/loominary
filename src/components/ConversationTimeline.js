@@ -951,6 +951,7 @@ const ConversationTimeline = ({
     if (format === 'jsonl_chat') return 'assistant platform-jsonl_chat';
     if (format === 'chatgpt') return 'assistant platform-chatgpt';
     if (format === 'grok') return 'assistant platform-grok';
+    if (format === 'meta') return 'assistant platform-meta';
     if (format === 'copilot') return 'assistant platform-copilot';
     if (format === 'gemini_notebooklm') {
       const platformLower = platform?.toLowerCase() || '';

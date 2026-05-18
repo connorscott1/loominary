@@ -109,6 +109,29 @@ function _parseGrok(d) {
     return { meta_info: meta, chat_history: history, format: 'grok' };
 }
 
+// ─── Meta AI parser ──────────────────────────────────────────────────────────
+function _parseMeta(d) {
+    const meta = {
+        title: d.title || 'Meta AI conversation',
+        created_at: _fmtDate(d.exportTime),
+        updated_at: _fmtDate(d.exportTime),
+        uuid: d.id || d.conversationId || '',
+        conversation_id: d.conversationId || '',
+        snapshot_id: d.snapshotId || '',
+        platform: 'meta'
+    };
+    const history = (d.messages || []).map((m, i) => {
+        const isHuman = m.sender === 'human' || m.role === 'User';
+        const msg = _blankMsg(i, m.id || `meta_${i}`, i > 0 ? (d.messages[i - 1].id || '') : '', isHuman ? 'human' : 'assistant', isHuman ? 'User' : 'Meta AI', _fmtDate(m.createdAt));
+        msg.display_text = m.content || m.text || '';
+        if (Array.isArray(m.attachments)) msg.attachments = m.attachments;
+        if (Array.isArray(m.citations)) msg.citations = m.citations;
+        if (m.turnId) msg.turn_id = m.turnId;
+        return msg;
+    });
+    return { meta_info: meta, chat_history: history, raw_data: d, format: 'meta' };
+}
+
 // ─── Gemini / scraped parser ──────────────────────────────────────────────────
 function _attachGeminiImages(msg, images) {
     if (!Array.isArray(images) || !images.length) return;
@@ -174,6 +197,7 @@ function _parseRaw(jsonData) {
     if (jsonData.chat_history && jsonData.format) return jsonData; // already processed
     if (jsonData.chat_messages) return _parseClaude(jsonData);
     if (jsonData.responses && jsonData.conversationId !== undefined) return _parseGrok(jsonData);
+    if (jsonData.platform === 'meta' && Array.isArray(jsonData.messages)) return _parseMeta(jsonData);
     if (jsonData.conversation && jsonData.platform) return _parseGemini(jsonData);
     return null;
 }

@@ -5,6 +5,7 @@
 import { extractClaudeData, detectClaudeBranches } from './claudeParser.js';
 import { extractChatGPTData, detectChatGPTBranches } from './chatgptParser.js';
 import { extractGrokData, detectGrokBranches } from './grokParser.js';
+import { extractMetaData, detectMetaBranches } from './metaParser.js';
 import { extractGeminiData, extractCopilotData, extractMergedJSONLData, mergeJSONLFiles, detectOtherBranches } from './otherParsers.js';
 import { extractClaudeCodeData, detectClaudeCodeBranches, isClaudeCodeFormat } from './claudeCodeParser.js';
 
@@ -51,6 +52,11 @@ export const detectFileFormat = (jsonData) => {
     return 'grok';
   }
 
+  // Meta AI userscript export format
+  if (jsonData?.platform === 'meta' && Array.isArray(jsonData.messages)) {
+    return 'meta';
+  }
+
   // Grok格式 - 备用检测（conversationId + responses）
   if (jsonData?.conversationId && Array.isArray(jsonData.responses) &&
       jsonData.responses.length > 0 && jsonData.responses[0]?.responseId) {
@@ -81,7 +87,7 @@ export const extractChatData = (jsonData, fileName = '') => {
   const format = detectFileFormat(jsonData);
 
   if (format === 'unknown') {
-    throw new Error('[Parser] 无法识别文件格式。支持的格式：Claude, Claude Code, ChatGPT, Grok, Copilot, Gemini, NotebookLM, JSONL');
+    throw new Error('[Parser] 无法识别文件格式。支持的格式：Claude, Claude Code, ChatGPT, Grok, Meta AI, Copilot, Gemini, NotebookLM, JSONL');
   }
 
   try {
@@ -92,6 +98,8 @@ export const extractChatData = (jsonData, fileName = '') => {
         return extractClaudeCodeData(jsonData, fileName);
       case 'grok':
         return extractGrokData(jsonData);
+      case 'meta':
+        return extractMetaData(jsonData);
       case 'copilot':
         return extractCopilotData(jsonData);
       case 'gemini_notebooklm':
@@ -124,6 +132,8 @@ export const detectBranches = (processedData) => {
       return detectChatGPTBranches(processedData);
     case 'grok':
       return detectGrokBranches(processedData);
+    case 'meta':
+      return detectMetaBranches(processedData);
     case 'copilot':
     case 'jsonl_chat':
     case 'gemini_notebooklm':

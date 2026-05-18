@@ -75,6 +75,12 @@
                     return 'grok';
                 }
                 // #endplatform
+                // #platform: meta
+                if (host.includes('meta.ai')) {
+                    console.log('[Loominary] Platform detected: meta');
+                    return 'meta';
+                }
+                // #endplatform
                 // #platform: copilot
                 if (host.includes('copilot.microsoft.com')) {
                     console.log('[Loominary] Platform detected: copilot');

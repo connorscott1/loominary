@@ -9,6 +9,9 @@
                 // #platform: grok
                 grok: '#000000',
                 // #endplatform
+                // #platform: meta
+                meta: '#0668e1',
+                // #endplatform
                 // #platform: copilot
                 copilot: '#151a28',
                 // #endplatform
@@ -375,6 +378,9 @@
                 // #platform: grok
                 grok: 'Grok',
                 // #endplatform
+                // #platform: meta
+                meta: 'Meta AI',
+                // #endplatform
                 // #platform: copilot
                 copilot: 'Copilot',
                 // #endplatform
@@ -413,6 +419,11 @@
             if (State.currentPlatform === 'grok') {
                 GrokHandler.addUI(controls);
                 GrokHandler.addButtons(controls);
+            }
+            // #endplatform
+            // #platform: meta
+            if (State.currentPlatform === 'meta') {
+                MetaAIHandler.addButtons(controls);
             }
             // #endplatform
             // #platform: copilot
@@ -463,6 +474,9 @@
         // #platform: grok
         if (State.currentPlatform === 'grok') GrokHandler.init();
         // #endplatform
+        // #platform: meta
+        if (State.currentPlatform === 'meta') MetaAIHandler.init();
+        // #endplatform
         // #platform: copilot
         if (State.currentPlatform === 'copilot') CopilotHandler.init();
         // #endplatform
@@ -474,7 +488,7 @@
 
         const initPanel = () => {
             UI.createPanel();
-            if (['claude'/* #platform: chatgpt */, 'chatgpt'/* #endplatform *//* #platform: grok */, 'grok'/* #endplatform *//* #platform: copilot */, 'copilot'/* #endplatform *//* #platform: gemini */, 'gemini', 'aistudio'/* #endplatform */].includes(State.currentPlatform)) {
+            if (['claude'/* #platform: chatgpt */, 'chatgpt'/* #endplatform *//* #platform: grok */, 'grok'/* #endplatform *//* #platform: meta */, 'meta'/* #endplatform *//* #platform: copilot */, 'copilot'/* #endplatform *//* #platform: gemini */, 'gemini', 'aistudio'/* #endplatform */].includes(State.currentPlatform)) {
                 let lastUrl = window.location.href;
                 let panelCheckTimer = null;
                 new MutationObserver(() => {
